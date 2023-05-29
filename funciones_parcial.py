@@ -6,13 +6,23 @@ import os
 
 def clear_console() -> None:
     """
-    It waits for the user to hit enter 
-    to clear the console and redisplay the appropriate thing.
+    Esta función borra la pantalla de la consola en Python esperando la entrada del usuario y luego
+    llamando al comando 'cls' desde el módulo 'os'.
     """
+   
     _ = input('Press a key to continue...')
     os.system('cls')
 
 def leer_archivo_json(ruta:str):
+    """
+    La función lee un archivo JSON y devuelve un diccionario que contiene información sobre los
+    jugadores.
+    
+    :param ruta: El parámetro "ruta" es una cadena que representa la ruta o ubicación del archivo JSON
+    que se debe leer
+    :type ruta: str
+    :return: el valor de la clave 'jugadores' de un archivo JSON ubicado en la ruta especificada.
+    """
    # path = r"pp_lab1_avellaneda_abril\\dt.json"
 # Cargar los datos del archivo JSON
     with open(ruta , "r") as archivo:
@@ -35,8 +45,17 @@ def imprimir_dato(texto:str):
 
 def validar_opcion(expresion:str, ingreso_usuario: str)-> str:
     """
-    Esta funcion valida que la opcion ingresada sea correcta
+    Esta función valida si la entrada del usuario es una opción correcta.
+    
+    :param expresion: un patrón de expresión regular que la entrada del usuario debe coincidir para que
+    se considere válido
+    :type expresion: str
+    :param ingreso_usuario: La entrada del usuario que necesita ser validada. Debería ser una cadena
+    :type ingreso_usuario: str
+    :return: un valor entero si la entrada del usuario coincide con el patrón de expresión regular; de
+    lo contrario, devuelve un valor booleano de False.
     """
+    
     validacion_opcion = False
     if re.match(expresion, ingreso_usuario):
         validacion_opcion = int(ingreso_usuario)
@@ -46,7 +65,17 @@ def validar_opcion(expresion:str, ingreso_usuario: str)-> str:
 #1
 def mostrar_dream_team(lista_jugadores: list[dict])-> list:   # buscar_nombre_posicion
     """
+    La función "mostrar_dream_team" toma una lista de diccionarios que contienen información sobre
+    jugadores de fútbol e imprime sus nombres y posiciones de forma formateada.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores de un equipo,
+    donde cada diccionario contiene las claves 'nombre' (name) y 'posicion' (posición)
+    :type lista_jugadores: list[dict]
+    :return: La función no tiene una declaración de retorno, por lo que devolverá "Ninguno" de forma
+    predeterminada.
     """
+   
+    
     if not lista_jugadores:              # mensaje = "Error"
         print("La lista esta vacia")
         return False
@@ -131,10 +160,16 @@ def dream_team_menu_principal():
        
 def validar_numeros(dato:str):
     """
-    valida si el dato pasado es numerico, y si lo es lo convierte en int o float
-    recibe un str
-    retorna un int o float en caso de ser numerico, si no lo es retorna False
+    La función valida si una cadena determinada es numérica y la convierte en un número entero o
+    flotante, y devuelve False si no es numérica.
+    
+    :param dato: una cadena que representa un número que debe validarse y convertirse en un número
+    entero o flotante
+    :type dato: str
+    :return: un entero o un flotante si la cadena de entrada es numérica y devuelve False si no es
+    numérica.
     """
+   
     if re.match(r"^\d+(\.\d+)?$", dato):
         try:
             return int(dato)
@@ -145,6 +180,16 @@ def validar_numeros(dato:str):
     
 #2
 def obtener_nombre_estadisticas(lista_jugadores:list[dict])-> dict:
+    """
+    Esta función toma una lista de diccionarios que representan a los jugadores y un índice, recupera al
+    jugador en ese índice, imprime su nombre y estadísticas y devuelve el diccionario que representa a
+    ese jugador.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores y sus estadísticas
+    :type lista_jugadores: list[dict]
+    :return: un diccionario que representa al jugador seleccionado por el usuario, junto con sus
+    estadísticas.
+    """
     """
     Esta funcion toma una lista de diccionarios que representan a los jugadores y un indice, recupera al
     al jugador en ese indice, imprime su nombre y estadisticas y devuelve el diccionario que representa a ese jugador.
@@ -173,6 +218,15 @@ def obtener_nombre_estadisticas(lista_jugadores:list[dict])-> dict:
 #3
 def generar_texto(dicc_jugador: dict)-> str:
     """
+    La función toma un diccionario de las estadísticas de un jugador y devuelve una cadena formateada
+    que contiene su nombre, posición y estadísticas.
+    
+    :param dicc_jugador: El parámetro "dicc_jugador" es un diccionario que contiene las estadísticas de
+    un jugador, incluido su nombre, posición y otras métricas de rendimiento
+    :type dicc_jugador: dict
+    :return: una cadena formateada que contiene el nombre, la posición y las estadísticas del jugador.
+    """
+    """
     Esta funcion toma un diccionario de las estadisticas de un jugador y devuelve una cadena formateada
     que contiene su nombre, posicion y estadisticas
     """
@@ -195,6 +249,18 @@ def generar_texto(dicc_jugador: dict)-> str:
 
 
 def guardar_archivo_csv(nombre_archivo:str, contenido:str)-> bool:
+    """
+    Esta función guarda el contenido de una cadena en un archivo con el nombre de archivo dado y
+    devuelve un valor booleano que indica si la operación fue exitosa o no.
+    
+    :param nombre_archivo: Una cadena que representa el nombre del archivo que se va a crear o
+    sobrescribir
+    :type nombre_archivo: str
+    :param contenido: El contenido (texto) que se escribirá en el archivo
+    :type contenido: str
+    :return: La función siempre devuelve False, independientemente de si la operación se realizó
+    correctamente o no.
+    """
     """
     Esta funcion guarda el contenido de una cadena de un archivo con el nombre de archivo dado y
     devuelve un valor booleano que indica si la operacion fue exitosa o no
@@ -233,7 +299,18 @@ def buscar_por_nombre(lista_jugadores:list[dict], jugador: dict, nombre: str):
 #4
 def mostrar_logros_por_busqueda(lista_jugadores: list[dict], nombre: str):
     """
+    Esta función toma una lista de diccionarios que contienen información del jugador y un nombre de
+    jugador como entrada, e imprime los logros del jugador con el nombre dado.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores y sus logros
+    :type lista_jugadores: list[dict]
+    :param nombre: El parámetro "nombre" es una cadena que representa el nombre del jugador cuyos logros
+    queremos mostrar
+    :type nombre: str
+    :return: La función no tiene una declaración de devolución, pero imprime información sobre los
+    logros de un jugador cuyo nombre coincide con el parámetro de entrada.
     """
+    
     if len(lista_jugadores) == 0:
         print("Lista vacia")
         return False
@@ -257,6 +334,20 @@ def mostrar_logros_por_busqueda(lista_jugadores: list[dict], nombre: str):
 #5
 def calcular_promedio_total(lista_jugadores:list[dict], estadistica:str):
     """
+    Esta función calcula el promedio total de una estadística seleccionada para una lista de jugadores.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores y sus estadísticas
+    :type lista_jugadores: list[dict]
+    :param estadistica: El nombre de la estadística para la que se calculará el promedio total. Debe ser
+    una cadena y debe coincidir con una de las claves del diccionario "estadisticas" de cada jugador de
+    la lista
+    :type estadistica: str
+    :return: el promedio calculado de la estadística seleccionada para la lista de jugadores
+    proporcionada como entrada. Si la lista está vacía, devuelve -1. Si la estadística seleccionada no
+    se encuentra en el diccionario de estadísticas del jugador, imprime un mensaje que dice que la
+    estadística no existe.
+    """
+    """
     Esta funcion calcula el promedio total de la estadistica seleccionada
     """
     if len(lista_jugadores) == 0:
@@ -278,6 +369,24 @@ def calcular_promedio_total(lista_jugadores:list[dict], estadistica:str):
 
 
 def ordenar_lista_segun_key(lista_jugadores: list[dict], key_a_ordenar : str, flag_estadistica = False, orden_ascendente = True)-> list:
+    """
+    Esta función ordena una lista de diccionarios según una clave específica, con la opción de ordenar
+    en orden ascendente o descendente y considerar diccionarios de estadísticas anidados.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores y sus estadísticas
+    :type lista_jugadores: list[dict]
+    :param key_a_ordenar: La clave o atributo del diccionario en la lista de jugadores que se usará para
+    ordenar la lista
+    :type key_a_ordenar: str
+    :param flag_estadistica: Una bandera booleana que indica si la clave a ordenar está anidada dentro
+    de un diccionario bajo la clave "estadisticas" en cada elemento de la lista. Si es Verdadero, la
+    función accederá a la clave anidada para realizar la clasificación. Si es False, se ordenará según
+    la clave de nivel superior proporcionada, defaults to False (optional)
+    :param orden_ascendente: Un parámetro booleano que determina si la lista debe ordenarse en orden
+    ascendente (Verdadero) o descendente (Falso), defaults to True (optional)
+    :return: una lista de diccionarios ordenados según la clave especificada y el orden de
+    clasificación.
+    """
     """
     Esta funcion genera una lista ordenada segun param "key_a_odenar" a traves de un metodo de ordenamiento
     """
@@ -314,6 +423,23 @@ def ordenar_lista_segun_key(lista_jugadores: list[dict], key_a_ordenar : str, fl
 
 def mostrar_estadistica_por_jugador_ordenado(lista_jugadores : list[dict], key_orden : str, estadistica: str):
     """
+    Esta función toma una lista de diccionarios que contienen información del jugador, la ordena según
+    una clave determinada y muestra el nombre del jugador y una estadística específica para cada
+    jugador.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores y sus estadísticas
+    :type lista_jugadores: list[dict]
+    :param key_orden: La clave por la que se ordenará la lista de jugadores
+    :type key_orden: str
+    :param estadistica: El parámetro "estadistica" es una cadena que representa la estadística
+    específica que queremos mostrar para cada jugador en la lista. Se utiliza para acceder al valor
+    correspondiente en el diccionario "estadisticas" del diccionario de cada jugador de la lista
+    :type estadistica: str
+    :return: una lista de listas, donde cada lista interna contiene el nombre de un jugador y su valor
+    correspondiente para la estadística especificada. Sin embargo, la función también tiene una
+    declaración condicional que devuelve False si la lista de entrada está vacía.
+    """
+    """
     Esta funcion muestra un listado ordenado segun "key_orden", del nombre de los jugadores
     junto a la estadistica pasada por param. 
     """   
@@ -333,6 +459,18 @@ def mostrar_estadistica_por_jugador_ordenado(lista_jugadores : list[dict], key_o
 
 #6
 def buscar_jugador_sfb(lista_jugadores: list[dict], nombre: str):
+    """
+    Esta función busca el nombre de un jugador en una lista de diccionarios y muestra si está o no en el
+    Salón de la Fama del Baloncesto.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a jugadores de baloncesto, donde
+    cada diccionario contiene información sobre un jugador, como su nombre, logros, etc
+    :type lista_jugadores: list[dict]
+    :param nombre: El nombre del jugador que la función está buscando en la lista de jugadores
+    :type nombre: str
+    :return: La función no tiene una declaración de devolución, por lo que devuelve Ninguno de forma
+    predeterminada.
+    """
     """
     Esta funcion muestra un listado de jugadores, junto a su nombre y si se encuentran o no en un salon de fama. )sfb)
 
@@ -370,6 +508,20 @@ def buscar_jugador_sfb(lista_jugadores: list[dict], nombre: str):
 #7
 def encontrar_maximo(lista_jugadores:list[dict], clave_jugador:str, clave_valor:str)-> str:
     """
+    Esta función encuentra el jugador con el valor máximo para una clave específica en una lista de
+    jugadores y devuelve su nombre y valor como una cadena.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores y sus atributos
+    :type lista_jugadores: list[dict]
+    :param clave_jugador: La clave en el diccionario del jugador que contiene la información a comparar
+    (por ejemplo, "estadisticas")
+    :type clave_jugador: str
+    :param clave_valor: La clave del valor del que queremos encontrar el máximo en la lista de jugadores
+    :type clave_valor: str
+    :return: un mensaje de cadena que indica el jugador con el valor más alto para una clave específica
+    en una lista de diccionarios. Si la lista está vacía o hay un error, devuelve un mensaje de error.
+    """
+    """
     Esta funcion encuentra el valor maximo de una clave especifica en la lista de jugadores y devuelve
     el nombre del jugador que tiene ese valor maximo, junto con el valor mismo, en forma de cadena de texto
     """
@@ -389,6 +541,27 @@ def encontrar_maximo(lista_jugadores:list[dict], clave_jugador:str, clave_valor:
     return mensaje
 
 def mostrar_jugadores_promediado_mas_stat(lista_jugadores:list[dict], estadistica: str, valor_stat: float, flag_mostrar_posicion: False ):
+    """
+    Esta función muestra los jugadores que superan un determinado valor en una determinada estadística
+    y, opcionalmente, puede mostrar su posición.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores y sus estadísticas
+    :type lista_jugadores: list[dict]
+    :param estadistica: una cadena que representa la estadística a comparar (por ejemplo, "puntos",
+    "rebotes", "asistencias")
+    :type estadistica: str
+    :param valor_stat: El valor de la estadística que queremos comparar con las estadísticas de los
+    jugadores
+    :type valor_stat: float
+    :param flag_mostrar_posicion: El parámetro flag_mostrar_posicion es una bandera booleana que
+    determina si mostrar o no la posición de los jugadores en la salida. Si se establece en True, la
+    posición de los jugadores se mostrará junto con su nombre y el valor de la estadística especificada.
+    Si se establece en falso
+    :type flag_mostrar_posicion: False
+    :return: una lista de jugadores que tienen una estadística mayor que el valor de entrada, junto con
+    su nombre y posición. Si la lista de entrada está vacía, la función devuelve False. Si ningún
+    jugador cumple con los criterios, la función imprime un mensaje y devuelve una lista vacía.
+    """
     """
     Esta funcion muestra los jugadores que superen el valor de la estadistica deseada.
     """
@@ -413,6 +586,18 @@ def mostrar_jugadores_promediado_mas_stat(lista_jugadores:list[dict], estadistic
     
 def generar_promedio_segun_stat_menos_peor_valor(lista_jugadores:list[dict], estadistica: str):
     """
+    Esta función genera el promedio de una estadística elegida para una lista de jugadores, excluyendo
+    al jugador con el peor promedio para esa estadística.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores y sus estadísticas
+    :type lista_jugadores: list[dict]
+    :param estadistica: El parámetro "estadistica" es una cadena que representa el nombre de la
+    estadística para la cual queremos generar el promedio
+    :type estadistica: str
+    :return: ya sea el promedio calculado de la estadística elegida o Falso si la lista de entrada está
+    vacía.
+    """
+    """
     Esta funcion genera el promedio de la suma de la estadistica elegida, sin tener en cuenta el stat del jugador que peor promedia
     """
     if len(lista_jugadores) == 0:
@@ -433,6 +618,14 @@ def generar_promedio_segun_stat_menos_peor_valor(lista_jugadores:list[dict], est
         print("Estadistica inexistente")
 
 def jugador_mas_logros(lista_jugadores:list[dict])-> dict:
+    """
+    Esta función calcula el jugador con más logros en su carrera de una lista de jugadores.
+    
+    :param lista_jugadores: Una lista de diccionarios que representan a los jugadores de baloncesto y
+    sus logros
+    :type lista_jugadores: list[dict]
+    :return: un diccionario con el jugador que más logros tiene en su carrera.
+    """
     """
     Calcula el jugador con mas logros en su carrera
     recibe la lista de jugadores
@@ -470,6 +663,14 @@ def jugador_mas_logros(lista_jugadores:list[dict])-> dict:
     return lista_de_jugadores[indice_jugador_mas_logros]
 
 def jugador_mas_temporadas(jugadores:list[dict])-> None:
+    """
+    Esta función encuentra al jugador(es) con la mayor cantidad de temporadas jugadas en base a una
+    lista de diccionarios de jugadores y los imprime junto con su número de temporadas.
+    
+    :param jugadores: una lista de diccionarios que representan a los jugadores, donde cada diccionario
+    contiene información sobre un jugador, como su nombre y estadísticas
+    :type jugadores: list[dict]
+    """
     """
     Esta funcion encuentra al jugador(es) con la mayor cantidad de temporadas jugadas en base a una
     lista de dicc de jugadores y los imprime uno a la vex junto con su cantidad de temporadas 
