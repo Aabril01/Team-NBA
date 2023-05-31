@@ -143,6 +143,14 @@ def imprimir_menu()-> None:
     20. Permitir al usuario ingresar un valor y mostrar los jugadores , ordenados por
         posición en la cancha, que hayan tenido un porcentaje de tiros de campo superior a
         ese valor.
+    24. Determinar la cantidad de jugadores que hay por cada posición.
+    25. Mostrar la lista de jugadores ordenadas por la cantidad de All-Star de forma descendente. La salida por pantalla debe tener un formato similar a este:
+    Michael Jordan (14 veces All Star)
+    Magic Johnson (12 veces All-Star)
+    26. 
+
+      
+
     """
     imprimir_dato(menu)
 def dream_team_menu_principal(): 
@@ -152,7 +160,7 @@ def dream_team_menu_principal():
     '''
     imprimir_menu()
     opcion = input("Ingresa una opción del menú: ").upper()
-    validacion = re.match( r'^[1]?[0-9]{1}$|20|23', opcion)
+    validacion = re.match( r'^[1]?[0-9]{1}$|20|24|25|26', opcion)
     if validacion:
          return True
     else:
@@ -496,12 +504,12 @@ def buscar_jugador_sfb(lista_jugadores: list[dict], nombre: str):
                     else:
                         lista_jugadores_sfb.append([jugador["nombre"], " No"])
 
-        mensaje = ""
+        mensaje = " "
         if flag_jugador == False:
             print("No existe jugador con ese nombre")
         else:
             for jugador in lista_jugadores_sfb:
-                mensaje += "Nombre: {0}\nSe encuentra dentro del HOF?: {1}\n\n".format(jugador[0], jugador[1])
+                mensaje += "Nombre: {0}\nSe encuentra dentro del SFB?: {1}\n\n".format(jugador[0], jugador[1])
             print(mensaje)
     
 
@@ -525,20 +533,45 @@ def encontrar_maximo(lista_jugadores:list[dict], clave_jugador:str, clave_valor:
     Esta funcion encuentra el valor maximo de una clave especifica en la lista de jugadores y devuelve
     el nombre del jugador que tiene ese valor maximo, junto con el valor mismo, en forma de cadena de texto
     """
-                           
+    """                       
     nombre_maximo = None
     maximo = 0
-    mensaje = "Error, no se pudo sacar maximo"
+    
+    
+    for jugador in lista_jugadores:
+        valor = jugador[clave_jugador][clave_valor]
+        if nombre_maximo in None or valor > maximo:
+                maximo = valor
+                jugador_maximo = jugador["nombre"]
+        return jugador_maximo
+    """
+    nombre_maximo = None
+    maximo = 0
     if lista_jugadores:
         for jugador in lista_jugadores:
             valor = jugador[clave_jugador][clave_valor]
-            if nombre_maximo in None or valor > maximo:
+            if nombre_maximo == None or valor > maximo:
                 maximo = valor
                 nombre_maximo = jugador["nombre"]
         clave_valor = clave_valor.replace("_"," ")
     if nombre_maximo:
         mensaje = "El jugador {0} tiene la mayor cantidad de {1}: {2}.".format(nombre_maximo, clave_valor, maximo)
     return mensaje
+
+def imprimir_jugador_max(jugador_maximo : dict, clave_jugador: str, clave_valor:str):
+
+    """
+    """
+    if jugador_maximo :
+        valor_maximo = jugador_maximo[clave_jugador][clave_valor]
+        nombre_jugador = jugador_maximo["nombre"]
+        clave_str = clave_valor.replace("_"," ")
+        print("Jugador con el valor maximo de {}:".format(clave_str))
+        print("Nombre: {}".format(nombre_jugador))
+        print("{}: {}".format(clave_str, valor_maximo))
+    else:
+        print("No se encontro ningun jugador")
+
 
 def mostrar_jugadores_promediado_mas_stat(lista_jugadores:list[dict], estadistica: str, valor_stat: float, flag_mostrar_posicion: False ):
     """
@@ -580,7 +613,7 @@ def mostrar_jugadores_promediado_mas_stat(lista_jugadores:list[dict], estadistic
             mensaje = "\nValor Ingresado: {0}\nJugadores que superar ese valor en {1}:\n".format(valor_stat, estadistica_str)
             for jugador in lista_jugadores_prom_mayor:
                 if flag_mostrar_posicion == False:
-                    mensaje += "{0} - {1}\n".format(jugador[0], jugador[2], jugador[1])
+                    mensaje += "{0} - {1}\n".format(jugador[0],  jugador[1])
             print(mensaje)
             return lista_jugadores_prom_mayor
     
@@ -690,12 +723,44 @@ def jugador_mas_temporadas(jugadores:list[dict])-> None:
         print("Jugador: {} | Temporadas: {}".format(jugador, temporadas))
 
 
+     ############### EXTRAS #############
+def cantidad_jugadores_por_posicion(jugadores):
+    jugadores_por_posicion = {}
+    for jugador in jugadores:
+        posicion = jugador["posicion"]
+        if posicion in jugadores_por_posicion:
+            jugadores_por_posicion[posicion] += 1
+        else:
+            jugadores_por_posicion[posicion] = 1
+    
+    for posicion, cantidad in jugadores_por_posicion.items():
+        print(posicion + ": " + str(cantidad))
 
 
+def mejor_estadistica_global(lista_jugadores: list[dict]):
 
+    mejor_jugador = max(lista_jugadores, key=lambda jugador: sum(jugador["estadisticas"].values()))
+    print("Mejor jugador en todas las estadísticas: " + mejor_jugador["nombre"])
+    
 
+def mostrar_jugadores_cantidad_allstar(lista:list):
 
+        lista_aux_jugadores = []
+        for jugador in lista:
+                
+                diccionario_jugador = {}
+                diccionario_jugador["nombre"] = jugador["nombre"]
+                for logros in jugador["logros"]:
 
+                        if re.search(r"^[0-9] +veces All-Star$|^[0-9][0-9] +veces All-Star$",logros):
+
+                                cantidad = logros[:2]
+                                cantidad = int(cantidad)
+                                diccionario_jugador["logros"] = cantidad
+                                lista_aux_jugadores.append(diccionario_jugador)
+                                
+        lista_aux_jugadores = mostrar_estadistica_por_jugador_ordenado(lista_aux_jugadores,"logros",None)
+        return lista_aux_jugadores
 
 
 

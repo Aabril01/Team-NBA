@@ -8,7 +8,7 @@ def app(lista_jugadores:list[dict]) -> None:
          
         imprimir_menu()
         opcion = input("Ingrese una opcion: ")
-        opcion = validar_opcion(r'^[1]?[0-9]{1}$|20|23', opcion)
+        opcion = validar_opcion(r'^[1]?[0-9]{1}$|20|24|25|26', opcion)
     
             
 
@@ -37,21 +37,21 @@ def app(lista_jugadores:list[dict]) -> None:
                 promedio = calcular_promedio_total(lista_jugadores, estadistica_buscada)
                 if promedio :
                     mostrar_estadistica_por_jugador_ordenado(lista_jugadores, "nombre", estadistica_buscada)
-                    print("\nEl promedio total del equipo de {0}: {1}\n",format(estadistica_buscada.replace("_"," ").capitalize(), promedio))
+                    print("\nEl promedio total del equipo de {0}: {1}\n".format(estadistica_buscada.replace("_"," ").capitalize(), promedio))
                 else:
                     print("La estadistica buscada no existe")
             case 6:
-                estadistica_buscada = "rebotes_totales"
+                nombre_jugador = input("Ingrese el nombre del jugador a buscar:")
                 buscar_jugador_sfb(lista_jugadores, nombre_jugador)
             case 7:
                 max_rebotes = encontrar_maximo(lista_jugadores, "estadisticas", "rebotes_totales")
-                imprimir_dato(max_rebotes)
+                imprimir_jugador_max(max_rebotes, "estadisticas", "rebotes_totales")
             case 8:
                 max_porcentaje_tiros_campo = encontrar_maximo(lista_jugadores, "estadisticas", "porcentaje_tiros_de_campo" )
-                imprimir_dato(max_porcentaje_tiros_campo)
+                imprimir_jugador_max(max_porcentaje_tiros_campo, "estadisticas", "porcentaje_tiros_de_campo")
             case 9:
                 max_asistencias = encontrar_maximo(lista_jugadores, "estadisticas", "asistencias_totales" )
-                imprimir_dato(max_asistencias)
+                imprimir_jugador_max(max_asistencias, "estadisticas", "asistencias_totales")
             case 10:
                 estadistica_buscada = "promedio_puntos_por_partido"
                 valor_ingresado = input("Ingrese un valor para comparar: ")
@@ -93,7 +93,7 @@ def app(lista_jugadores:list[dict]) -> None:
             case 17:
                 dict_jugador = jugador_mas_logros(lista_jugadores)
                 print("el jugador con mas logros es {}, con los siguientes:".format(dict_jugador["nombre"]))
-                for logro in dict_jugador["logors"]:
+                for logro in dict_jugador["logros"]:
                     print(logro)
             case 18:
                 estadistica_buscada = "porcentaje_tiros_triples"
@@ -113,6 +113,10 @@ def app(lista_jugadores:list[dict]) -> None:
                     mostrar_jugadores_promediado_mas_stat(lista_ordenada, estadistica_buscada, float(valor_ingresado), True)
                 else:
                     print("valor erroneo, por favor vuelva al menu e ingrese una opcion nuevamente")
+            case 24:
+                cantidad_jugadores_por_posicion(lista_jugadores)
+            case 25:
+                mostrar_jugadores_cantidad_allstar(lista_jugadores)
         clear_console()
 
 
